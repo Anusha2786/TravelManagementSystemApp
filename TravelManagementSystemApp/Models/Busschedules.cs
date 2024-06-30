@@ -2,9 +2,10 @@
 {
     public class Busschedules
     {
-        public int scheduleid;
-        public int BusId;
-        public DateTime Departuretime;
-        public DateTime Arrivaltime;
+        public int scheduleid { get; set; }
+        public int BusId { get; set; }
+        public DateTime Departuretime { get; set; }
+        public DateTime Arrivaltime { get; set; }
+        public Bus Bus { get; set; }
     }
 }

@@ -2,9 +2,10 @@
 {
     public class Trainschedules
     {
-        public int scheduleid;
-        public int TrainId;
-        public DateTime Departuretime;
-        public DateTime Arrivaltime;
+        public int scheduleid { get; set; }
+        public int TrainId { get; set; }
+        public DateTime Departuretime { get; set; }
+        public DateTime Arrivaltime { get; set; }
+        public Train Train { get; set; }
     }
 }
