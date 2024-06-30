@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using TravelManagementSystemApp.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<TravelManagementSystemAppContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TravelManagementSystemAppContext") ?? throw new InvalidOperationException("Connection string 'TravelManagementSystemAppContext' not found.")));
 
 // Add services to the container.
 
