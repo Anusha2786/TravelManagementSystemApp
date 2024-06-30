@@ -2,11 +2,11 @@
 {
     public class PutFlightsDTO
     {
-        public string FlightNumber { get; set; }
+        public string Flight_Number { get; set; }
         public string Airline { get; set; }
-        public string DepartureAirport { get; set; }
-        public string ArrivalAirport { get; set; }
-        public int TotalSeats { get; set; }
-        public int AvailableSeats { get; set; }
+        public string Departure_Airport { get; set; }
+        public string Arrival_Airport { get; set; }
+        public int Total_Seats { get; set; }
+        public int Available_Seats { get; set; }
     }
 }

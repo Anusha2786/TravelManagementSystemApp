@@ -12,7 +12,7 @@ namespace TravelManagementSystemApp.Models.Entities
         public string Arrival_Airport { get; set; }
         public int Total_Seats { get; set; }
         public int Available_Seats { get; set; }
-        // Navigation property to represent the relationship with FlightsSchedules
-        public ICollection<Flightsschedules> Flightsschedules { get; set; }
+       
+        
     }
 }

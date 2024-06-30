@@ -94,7 +94,7 @@ namespace TravelManagementSystemApp.Controllers
             // You can optionally include a link to get the details of the newly created resource
             var flightDtoResponse = new FlightsDTO
             {
-                Flight_ID = flight.Flight_ID,
+               
                 Flight_Number = flight.Flight_Number,
                 Airline = flight.Airline,
                 Departure_Airport = flight.Departure_Airport,
@@ -120,12 +120,12 @@ namespace TravelManagementSystemApp.Controllers
             }
 
             // Update flight entity with data from DTO
-            flight.Flight_Number = updateFlightDto.FlightNumber;
+            flight.Flight_Number = updateFlightDto.Flight_Number;
             flight.Airline = updateFlightDto.Airline;
-            flight.Departure_Airport = updateFlightDto.DepartureAirport;
-            flight.Arrival_Airport = updateFlightDto.ArrivalAirport;
-            flight.Total_Seats = updateFlightDto.TotalSeats;
-            flight.Available_Seats = updateFlightDto.AvailableSeats;
+            flight.Departure_Airport = updateFlightDto.Departure_Airport;
+            flight.Arrival_Airport = updateFlightDto.Arrival_Airport;
+            flight.Total_Seats = updateFlightDto.Total_Seats;
+            flight.Available_Seats = updateFlightDto.Available_Seats;
 
             try
             {
