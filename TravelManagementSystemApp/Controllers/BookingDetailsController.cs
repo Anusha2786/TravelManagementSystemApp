@@ -17,6 +17,12 @@ namespace TravelManagementSystemApp.Controllers
         }
 
         // GET: api/bookingdetails
+        /// <summary>
+        /// Get the list of all the Booking Details
+        /// </summary>
+        
+        ///<response code="201">Return the booking details</response>
+        ///<response code="400">If the item is null</response>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingDetailsDTO>>> GetBookingDetails()
         {
