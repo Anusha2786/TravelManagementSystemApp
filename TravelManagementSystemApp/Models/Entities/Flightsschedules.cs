@@ -5,10 +5,10 @@ namespace TravelManagementSystemApp.Models.Entities
     public class Flightsschedules
     {
         [Key]
-        public int ScheduleID { get; set; }
-        public int FlightID { get; set; }
-        public DateTime DepartureTime { get; set; }
-        public DateTime ArrivalTime { get; set; }
+        public int Schedule_ID { get; set; }
+        public int Flight_ID { get; set; }
+        public DateTime Departure_Time { get; set; }
+        public DateTime Arrival_Time { get; set; }
         public string Frequency { get; set; }
 
         // Navigation property to represent the relationship
