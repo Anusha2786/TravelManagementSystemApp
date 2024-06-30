@@ -2,7 +2,7 @@
 {
     public class FlightsDTO
     {
-        public int Flight_ID { get; set; }
+        
         public string Flight_Number { get; set; }
         public string Airline { get; set; }
         public string Departure_Airport { get; set; }

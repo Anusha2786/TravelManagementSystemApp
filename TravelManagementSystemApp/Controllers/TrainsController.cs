@@ -17,22 +17,23 @@ namespace TravelManagementSystemApp.Controllers
             this.hasslefreetraveldbcontext = hasslefreetraveldbcontext;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Trains>>> GetTrains()
+        public async Task<ActionResult<IEnumerable<TrainDTO>>> GetCabs()
         {
-            return await hasslefreetraveldbcontext.Trains.ToListAsync();
+            var cabs = await hasslefreetraveldbcontext.Trains.ToListAsync();
+            return Ok(cabs);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Trains>> GetTrain(int id)
+        public async Task<ActionResult<TrainDTO>> GetTrain(int id)
         {
-            var train = await hasslefreetraveldbcontext.Trains.FindAsync(id);
+            var Train = await hasslefreetraveldbcontext.Trains.FindAsync(id);
 
-            if (train == null)
+            if (Train == null)
             {
                 return NotFound();
             }
 
-            return train;
+            return Ok(Train);
         }
         // POST: api/Trains
         [HttpPost]

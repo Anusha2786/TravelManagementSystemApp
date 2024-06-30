@@ -17,12 +17,16 @@ namespace TravelManagementSystemApp.Controllers
         }
         // GET: api/Buses
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Buses>>> GetBuses()
+        public async Task<ActionResult<IEnumerable<BusDTO>>> GetBuses()
         {
-            return await hasslefreetraveldbcontext.Buses.ToListAsync();
+            var buses = await hasslefreetraveldbcontext.Buses.ToListAsync();
+            return Ok(buses);
+
+
         }
+        // GET: api/Buses/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Buses>> GetBus(int id)
+        public async Task<ActionResult<BusDTO>> GetBusById(int id)
         {
             var bus = await hasslefreetraveldbcontext.Buses.FindAsync(id);
 
@@ -31,13 +35,19 @@ namespace TravelManagementSystemApp.Controllers
                 return NotFound();
             }
 
-            return bus;
+            return Ok(bus);
         }
-        // POST: api/Buses
+
         [HttpPost]
         public async Task<ActionResult<Buses>> PostBus(BusDTO busDto)
         {
-            var bus = new Buses
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Map BusDTO to Buses entity
+            var busEntity = new Buses
             {
                 Bus_Number = busDto.Bus_Number,
                 Bus_Name = busDto.Bus_Name,
@@ -47,11 +57,14 @@ namespace TravelManagementSystemApp.Controllers
                 Available_Seats = busDto.Available_Seats
             };
 
-            hasslefreetraveldbcontext.Buses.Add(bus);
+            hasslefreetraveldbcontext.Buses.Add(busEntity);
             await hasslefreetraveldbcontext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetBus), new { id = bus.Bus_ID }, bus);
+            // Return 201 Created response with the created entity
+            return CreatedAtAction(nameof(GetBusById), new { id = busEntity.Bus_ID }, busEntity);
         }
+
+
         // PUT: api/Buses/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBus(int id, BusDTO busDto)

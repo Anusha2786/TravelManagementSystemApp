@@ -12,6 +12,7 @@ namespace TravelManagementSystemApp.Data
             public DbSet<Flights> Flights { get; set; }
             public DbSet<Trains> Trains { get; set; }
         public DbSet<Buses> Buses { get; set; }
+        public DbSet<Cabs> Cabs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

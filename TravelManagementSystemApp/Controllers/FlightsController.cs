@@ -28,7 +28,7 @@ namespace TravelManagementSystemApp.Controllers
             var flights = await hasslefreetraveldbcontext.Flights
                 .Select(f => new FlightsDTO
                 {
-                    Flight_ID = f.Flight_ID,
+                    
                     Flight_Number = f.Flight_Number,
                     Airline = f.Airline,
                     Departure_Airport = f.Departure_Airport,
@@ -55,7 +55,7 @@ namespace TravelManagementSystemApp.Controllers
             // Map the Flight entity to FlightsDTO
             var flightDTO = new FlightsDTO
             {
-                Flight_ID = flight.Flight_ID,
+               
                 Flight_Number = flight.Flight_Number,
                 Airline = flight.Airline,
                 Departure_Airport = flight.Departure_Airport,
