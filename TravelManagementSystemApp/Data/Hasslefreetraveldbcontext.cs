@@ -86,7 +86,7 @@ namespace TravelManagementSystemApp.Data
                 .WithMany()
                 .HasForeignKey(p => p.Booking_ID);
             modelBuilder.Entity<Stations>()
-                .HasKey(s => s.Station_Code); // Define StationCode as primary key
+                .HasKey(s => s.Code); // Define StationCode as primary key
             // Configure relationships and constraints here if needed
             modelBuilder.Entity<Booking_Details>()
                 .HasOne(bd => bd.Bookings)
