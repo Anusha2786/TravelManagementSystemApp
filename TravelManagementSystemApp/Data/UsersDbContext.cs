@@ -16,6 +16,8 @@ namespace TravelManagementSystemApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Users>()
+           .HasKey(u => u.userid);
             modelBuilder.Entity<Busschedules>()
                 .HasKey(bs => bs.scheduleid);
 
