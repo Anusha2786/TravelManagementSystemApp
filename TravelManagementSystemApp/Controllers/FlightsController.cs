@@ -24,7 +24,13 @@ namespace TravelManagementSystemApp.Controllers
             this.hasslefreetraveldbcontext = hasslefreetraveldbcontext;
         }
         // GET: api/flights
+        /// <summary>
+        /// Retrieves a list of all flights.
+        /// </summary>
+        /// <returns>A list of Flight objects</returns>
+        /// <response code="200">Returns the list of flights</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<FlightsDTO>>> GetCabs()
         {
             var cabs = await hasslefreetraveldbcontext.Flights.ToListAsync();
@@ -32,7 +38,16 @@ namespace TravelManagementSystemApp.Controllers
         }
 
         // GET: api/flights/{id}
+        /// <summary>
+        /// Retrieves a specific flight by ID.
+        /// </summary>
+        /// <param name="id">The ID of the flight to retrieve</param>
+        /// <returns>A single Flight object</returns>
+        /// <response code="200">Returns the flight with the specified ID</response>
+        /// <response code="404">If no flight with the specified ID exists</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FlightsDTO>> GetFlightById(int id)
         {
             var flight = await hasslefreetraveldbcontext.Flights.FindAsync(id);
@@ -56,9 +71,16 @@ namespace TravelManagementSystemApp.Controllers
         }
 
         // POST: api/flights
-
-        // POST: api/flights
+        /// <summary>
+        /// Creates a new flight entry.
+        /// </summary>
+        /// <param name="flight">The Flight object containing the details to add</param>
+        /// <returns>A newly created Flight object</returns>
+        /// <response code="201">Returns the newly created flight</response>
+        /// <response code="400">If the request body is null or invalid</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Flights> PostFlight(FlightsDTO flightsDTO)
         {
             if (!ModelState.IsValid)
@@ -83,7 +105,19 @@ namespace TravelManagementSystemApp.Controllers
             return CreatedAtAction(nameof(GetFlightById), new { id = flight.Flight_ID }, flight);
         }
         // PUT: api/flights/{id}
+        /// <summary>
+        /// Updates an existing flight record identified by ID.
+        /// </summary>
+        /// <param name="id">The ID of the flight to update</param>
+        /// <param name="flight">The updated Flight object</param>
+        /// <returns>The updated Flight object</returns>
+        /// <response code="200">Returns the updated flight</response>
+        /// <response code="400">If the request body or ID is invalid</response>
+        /// <response code="404">If no flight with the specified ID exists</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult PutFlight(int id, FlightsDTO flightsDTO)
         {
            
@@ -121,7 +155,16 @@ namespace TravelManagementSystemApp.Controllers
             return NoContent();
         }
         // DELETE: api/flights/{id}
+        /// <summary>
+        /// Deletes a flight record identified by ID.
+        /// </summary>
+        /// <param name="id">The ID of the flight to delete</param>
+        /// <returns>No content if successful, NotFound if the flight with the specified ID does not exist</returns>
+        /// <response code="204">No content if the flight is successfully deleted</response>
+        /// <response code="404">If no flight with the specified ID exists</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult DeleteFlight(int id)
         {
             var flight = hasslefreetraveldbcontext.Flights.Find(id);

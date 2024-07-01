@@ -16,7 +16,13 @@ namespace TravelManagementSystemApp.Controllers
             this.hasslefreetraveldbcontext = hasslefreetraveldbcontext;
         }
         // GET: api/Buses
+        /// <summary>
+        /// Retrieves a list of all buses.
+        /// </summary>
+        /// <returns>A list of Bus objects</returns>
+        /// <response code="200">Returns the list of buses</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<BusDTO>>> GetBuses()
         {
             var buses = await hasslefreetraveldbcontext.Buses.ToListAsync();
@@ -24,8 +30,16 @@ namespace TravelManagementSystemApp.Controllers
 
 
         }
-        // GET: api/Buses/5
+        /// <summary>
+        /// Retrieves a specific bus by ID.
+        /// </summary>
+        /// <param name="id">The ID of the bus to retrieve</param>
+        /// <returns>A single Bus object</returns>
+        /// <response code="200">Returns the bus with the specified ID</response>
+        /// <response code="404">If no bus with the specified ID exists</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BusDTO>> GetBusById(int id)
         {
             var bus = await hasslefreetraveldbcontext.Buses.FindAsync(id);
@@ -38,7 +52,17 @@ namespace TravelManagementSystemApp.Controllers
             return Ok(bus);
         }
 
-        [HttpPost]
+       // / POST: api/Buses
+/// <summary>
+/// Creates a new bus entry.
+/// </summary>
+/// <param name="bus">The Bus object containing the details to add</param>
+/// <returns>A newly created Bus object</returns>
+/// <response code="201">Returns the newly created bus</response>
+/// <response code="400">If the request body is null or invalid</response>
+[HttpPost]
+[ProducesResponseType(StatusCodes.Status201Created)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Buses>> PostBus(BusDTO busDto)
         {
             if (!ModelState.IsValid)
@@ -66,7 +90,19 @@ namespace TravelManagementSystemApp.Controllers
 
 
         // PUT: api/Buses/5
+        /// <summary>
+        /// Updates an existing bus record identified by ID.
+        /// </summary>
+        /// <param name="id">The ID of the bus to update</param>
+        /// <param name="bus">The updated Bus object</param>
+        /// <returns>The updated Bus object</returns>
+        /// <response code="200">Returns the updated bus</response>
+        /// <response code="400">If the request body or ID is invalid</response>
+        /// <response code="404">If no bus with the specified ID exists</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutBus(int id, BusDTO busDto)
         {
             if (!ModelState.IsValid)
@@ -108,7 +144,16 @@ namespace TravelManagementSystemApp.Controllers
             return NoContent();
         }
         // DELETE: api/Buses/5
+        /// <summary>
+        /// Deletes a bus record identified by ID.
+        /// </summary>
+        /// <param name="id">The ID of the bus to delete</param>
+        /// <returns>No content if successful, NotFound if the bus with the specified ID does not exist</returns>
+        /// <response code="204">No content if the bus is successfully deleted</response>
+        /// <response code="404">If no bus with the specified ID exists</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBus(int id)
         {
             var bus = await hasslefreetraveldbcontext.Buses.FindAsync(id);

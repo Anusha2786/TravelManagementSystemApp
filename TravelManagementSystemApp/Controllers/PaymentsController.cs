@@ -16,7 +16,13 @@ namespace TravelManagementSystemApp.Controllers
             this.hasslefreetraveldbcontext = hasslefreetraveldbcontext;
         }
         // GET: api/payments
+        /// <summary>
+        /// Retrieves a list of all payments.
+        /// </summary>
+        /// <returns>A list of Payment objects</returns>
+        /// <response code="200">Returns the list of payments</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Payments>>> GetPayments()
         {
             var payments = await hasslefreetraveldbcontext.Payments
@@ -33,8 +39,17 @@ namespace TravelManagementSystemApp.Controllers
 
             return Ok(payments);
         }
-        // GET: api/payments/5
+        // GET: api/payments/{id}
+        /// <summary>
+        /// Retrieves a specific payment by ID.
+        /// </summary>
+        /// <param name="id">The ID of the payment to retrieve</param>
+        /// <returns>A single Payment object</returns>
+        /// <response code="200">Returns the payment with the specified ID</response>
+        /// <response code="404">If no payment with the specified ID exists</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Payments>> GetPaymentById(int id)
         {
             var payment = await hasslefreetraveldbcontext.Payments
@@ -60,7 +75,16 @@ namespace TravelManagementSystemApp.Controllers
         }
 
         // POST: api/payments
+        /// <summary>
+        /// Creates a new payment entry.
+        /// </summary>
+        /// <param name="payment">The Payment object containing the details to add</param>
+        /// <returns>A newly created Payment object</returns>
+        /// <response code="201">Returns the newly created payment</response>
+        /// <response code="400">If the request body is null or invalid</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Payments>> PostPayment(Payments createPaymentDto)
         {
             if (!ModelState.IsValid)
@@ -92,8 +116,20 @@ namespace TravelManagementSystemApp.Controllers
             return CreatedAtAction(nameof(GetPaymentById), new { id = paymentDto.Payment_ID }, paymentDto);
         }
 
-        // PUT: api/payments/5
+        // PUT: api/payments/{id}
+        /// <summary>
+        /// Updates an existing payment record identified by ID.
+        /// </summary>
+        /// <param name="id">The ID of the payment to update</param>
+        /// <param name="payment">The updated Payment object</param>
+        /// <returns>The updated Payment object</returns>
+        /// <response code="200">Returns the updated payment</response>
+        /// <response code="400">If the request body or ID is invalid</response>
+        /// <response code="404">If no payment with the specified ID exists</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutPayment(int id, Payments updatePaymentDto)
         {
             
@@ -131,8 +167,17 @@ namespace TravelManagementSystemApp.Controllers
 
             return NoContent();
         }
-        // DELETE: api/payments/5
+        // DELETE: api/payments/{id}
+        /// <summary>
+        /// Deletes a payment record identified by ID.
+        /// </summary>
+        /// <param name="id">The ID of the payment to delete</param>
+        /// <returns>No content if successful, NotFound if the payment with the specified ID does not exist</returns>
+        /// <response code="204">No content if the payment is successfully deleted</response>
+        /// <response code="404">If no payment with the specified ID exists</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePayment(int id)
         {
             var payment = await hasslefreetraveldbcontext.Payments.FindAsync(id);

@@ -16,7 +16,16 @@ namespace TravelManagementSystemApp.Controllers
             this.hasslefreetraveldbcontext = hasslefreetraveldbcontext;
         }
         // GET: api/bookings
+        /// <summary>
+        /// Retrieves a list of all Bookings.
+        /// </summary>
+        /// <returns>A list of Booking objects</returns>
+        /// <response code="200">Returns the list of bookings</response>
+        /// <response code="400">If the request is invalid or null</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+      
         public async Task<ActionResult<IEnumerable<BookingsDTO>>> GetBookings()
         {
             var bookings = await hasslefreetraveldbcontext.Bookings
@@ -39,7 +48,18 @@ namespace TravelManagementSystemApp.Controllers
             return Ok(bookings);
         }
         // GET: api/bookings/{id}
+        /// <summary>
+        /// Retrieves a specific Booking by ID.
+        /// </summary>
+        /// <param name="id">The ID of the Booking to retrieve</param>
+        /// <returns>A single Booking object</returns>
+        /// <response code="200">Returns the booking with the specified ID</response>
+        /// <response code="400">If the request is invalid or null</response>
+        /// <response code="404">If no booking with the specified ID exists</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BookingsDTO>> GetBookingById(int id)
         {
             var booking = await hasslefreetraveldbcontext.Bookings
@@ -70,7 +90,16 @@ namespace TravelManagementSystemApp.Controllers
         }
 
         // POST: api/bookings
+        /// <summary>
+        /// Creates a new Booking entry.
+        /// </summary>
+        /// <param name="booking">The Booking object containing the details to add</param>
+        /// <returns>A newly created Booking object</returns>
+        /// <response code="201">Returns the newly created booking</response>
+        /// <response code="400">If the request body is null or invalid</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<BookingsDTO>> PostBooking(BookingsDTO createBookingDto)
         {
             if (!ModelState.IsValid)
@@ -102,7 +131,19 @@ namespace TravelManagementSystemApp.Controllers
             return CreatedAtAction(nameof(GetBookingById), new { id = booking.Booking_ID }, bookingDto);
         }
         // PUT: api/bookings/{id}
+        /// <summary>
+        /// Updates an existing Booking record identified by ID.
+        /// </summary>
+        /// <param name="id">The ID of the Booking to update</param>
+        /// <param name="booking">The updated Booking object</param>
+        /// <returns>The updated Booking object</returns>
+        /// <response code="200">Returns the updated booking</response>
+        /// <response code="400">If the request body or ID is invalid</response>
+        /// <response code="404">If no booking with the specified ID exists</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> PutBooking(int id, BookingsDTO updateBookingDto)
         {
             
@@ -139,7 +180,16 @@ namespace TravelManagementSystemApp.Controllers
             return NoContent();
         }
         // DELETE: api/bookings/{id}
+        /// <summary>
+        /// Deletes a Booking record identified by ID.
+        /// </summary>
+        /// <param name="id">The ID of the booking to delete</param>
+        /// <returns>No content if successful, NotFound if the booking with the specified ID does not exist</returns>
+        /// <response code="204">No content if the booking is successfully deleted</response>
+        /// <response code="404">If no booking with the specified ID exists</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBooking(int id)
         {
             var booking = await hasslefreetraveldbcontext.Bookings.FindAsync(id);
