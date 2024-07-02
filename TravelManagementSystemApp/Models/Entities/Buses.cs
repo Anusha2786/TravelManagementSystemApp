@@ -9,7 +9,7 @@ namespace TravelManagementSystemApp.Models.Entities
 
         [Required]
         [StringLength(20)]
-        public string Bus_Number { get; set; }
+        public int Bus_Number { get; set; }
 
 
         [Required]

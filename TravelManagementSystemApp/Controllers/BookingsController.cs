@@ -24,29 +24,29 @@ namespace TravelManagementSystemApp.Controllers
         /// <response code="400">If the request is invalid or null</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-      
         public async Task<ActionResult<IEnumerable<BookingsDTO>>> GetBookings()
         {
             var bookings = await hasslefreetraveldbcontext.Bookings
-                .Include(b => b.User) // Include related User entity if needed
+                .Include(b => b.User) // Include related User entity
                 .Select(b => new BookingsDTO
                 {
-                    
                     Booking_Date = b.Booking_Date,
                     Booking_Type = b.Booking_Type,
                     Booking_Status = b.Booking_Status,
                     User = new UserDTO
                     {
+                        userid = b.User.userid, // Assuming UserId is the primary key of User entity
                         Firstname = b.User.Firstname,
                         Lastname = b.User.Lastname,
                         Email = b.User.Email,
+                        Phonenumber=b.User.Phonenumber,
                     }
                 })
                 .ToListAsync();
 
             return Ok(bookings);
         }
+
         // GET: api/bookings/{id}
         /// <summary>
         /// Retrieves a specific Booking by ID.
@@ -79,9 +79,11 @@ namespace TravelManagementSystemApp.Controllers
                 Booking_Status = booking.Booking_Status,
                 User = new UserDTO
                 {
+                    userid = booking.User.userid,
                     Firstname = booking.User.Firstname,
                     Lastname = booking.User.Lastname,
                     Email = booking.User.Email,
+                    Phonenumber = booking.User.Phonenumber,
                 }
             };
 

@@ -21,15 +21,28 @@ namespace TravelManagementSystemApp.Controllers
             _context = context;
         }
 
-        // GET: api/Stations
+        /// <summary>
+        /// Retrieves a list of all stations.
+        /// </summary>
+        /// <returns>A list of Station objects</returns>
+        /// <response code="200">Returns the list of stations</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)] // HTTP 200 - OK
         public async Task<ActionResult<IEnumerable<Stations>>> GetStations()
         {
             return await _context.Stations.ToListAsync();
         }
 
-        // GET: api/Stations/5
+        /// <summary>
+        /// Retrieves a specific station by ID.
+        /// </summary>
+        /// <param name="id">The ID of the station to retrieve</param>
+        /// <returns>The station with the specified ID</returns>
+        /// <response code="200">Returns the station</response>
+        /// <response code="404">If a station with the specified ID is not found</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)] // HTTP 200 - OK
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // HTTP 404 - Not Found
         public async Task<ActionResult<Stations>> GetStations(int id)
         {
             var stations = await _context.Stations.FindAsync(id);
@@ -42,9 +55,19 @@ namespace TravelManagementSystemApp.Controllers
             return stations;
         }
 
-        // PUT: api/Stations/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates an existing station.
+        /// </summary>
+        /// <param name="id">The ID of the station to update</param>
+        /// <param name="station">The updated station data</param>
+        /// <returns>No content</returns>
+        /// <response code="204">Indicates successful update</response>
+        /// <response code="400">If the request data is invalid or the ID does not match</response>
+        /// <response code="404">If the station with the specified ID does not exist</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)] // HTTP 204 - No Content
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // HTTP 400 - Bad Request
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // HTTP 404 - Not Found
         public async Task<IActionResult> PutStations(int id, Stations stations)
         {
             if (id != stations.StationID)
@@ -73,9 +96,16 @@ namespace TravelManagementSystemApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Stations
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new station.
+        /// </summary>
+        /// <param name="station">The station data to create</param>
+        /// <returns>A newly created station</returns>
+        /// <response code="201">Returns the newly created station</response>
+        /// <response code="400">If the station data is invalid</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)] // HTTP 201 - Created
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // HTTP 400 - Bad Request
         public async Task<ActionResult<Stations>> PostStations(Stations stations)
         {
             _context.Stations.Add(stations);
@@ -83,9 +113,16 @@ namespace TravelManagementSystemApp.Controllers
 
             return CreatedAtAction("GetStations", new { id = stations.StationID }, stations);
         }
-
-        // DELETE: api/Stations/5
+        /// <summary>
+        /// Deletes a specific station by ID.
+        /// </summary>
+        /// <param name="id">The ID of the station to delete</param>
+        /// <returns>No content</returns>
+        /// <response code="204">Indicates successful deletion</response>
+        /// <response code="404">If the station with the specified ID is not found</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)] // HTTP 204 - No Content
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // HTTP 404 - Not Found
         public async Task<IActionResult> DeleteStations(int id)
         {
             var stations = await _context.Stations.FindAsync(id);

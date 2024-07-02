@@ -9,6 +9,7 @@
         public string Booking_Status { get; set; }
         // Navigation property to User entity
         public Users User { get; set; }
+
         public ICollection<Booking_Details> Booking_Details { get; set; }
         // Navigation property to Payments entities
         public ICollection<Payments> Payments { get; set; }

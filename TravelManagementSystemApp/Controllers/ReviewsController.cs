@@ -21,8 +21,13 @@ namespace TravelManagementSystemApp.Controllers
             _context = context;
         }
 
-        // GET: api/Reviews
+        /// <summary>
+        /// Retrieves a list of all reviews.
+        /// </summary>
+        /// <returns>A list of Review objects</returns>
+        /// <response code="200">Returns the list of reviews</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)] // HTTP 200 - OK
         public async Task<ActionResult<IEnumerable<Reviews>>> GetReviews([FromQuery] int? userID)
         {
             if (userID.HasValue)
@@ -35,8 +40,16 @@ namespace TravelManagementSystemApp.Controllers
             }
         }
 
-        // GET: api/Reviews/5
+        /// <summary>
+        /// Retrieves a specific review by ID.
+        /// </summary>
+        /// <param name="id">The ID of the review to retrieve</param>
+        /// <returns>The review with the specified ID</returns>
+        /// <response code="200">Returns the review</response>
+        /// <response code="404">If a review with the specified ID is not found</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)] // HTTP 200 - OK
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // HTTP 404 - Not Found
         public async Task<ActionResult<Reviews>> GetReviews(int id)
         {
             var reviews = await _context.Reviews.FindAsync(id);
@@ -80,9 +93,16 @@ namespace TravelManagementSystemApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Reviews
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new review.
+        /// </summary>
+        /// <param name="review">The review data to create</param>
+        /// <returns>A newly created review</returns>
+        /// <response code="201">Returns the newly created review</response>
+        /// <response code="400">If the review data is invalid</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)] // HTTP 201 - Created
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // HTTP 400 - Bad Request
         public async Task<ActionResult<Reviews>> PostReviews(Reviews reviews)
         {
             _context.Reviews.Add(reviews);
@@ -91,8 +111,16 @@ namespace TravelManagementSystemApp.Controllers
             return CreatedAtAction("GetReviews", new { id = reviews.ReviewID }, reviews);
         }
 
-        // DELETE: api/Reviews/5
+        /// <summary>
+        /// Deletes a specific review by ID.
+        /// </summary>
+        /// <param name="id">The ID of the review to delete</param>
+        /// <returns>No content</returns>
+        /// <response code="204">Returns when the review is successfully deleted</response>
+        /// <response code="404">If no review with the specified ID exists</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)] // HTTP 204 - No Content
+        [ProducesResponseType(StatusCodes.Status404NotFound)] // HTTP 404 - Not Found
         public async Task<IActionResult> DeleteReviews(int id)
         {
             var reviews = await _context.Reviews.FindAsync(id);

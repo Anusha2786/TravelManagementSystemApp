@@ -25,11 +25,24 @@ namespace TravelManagementSystemApp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<BusDTO>>> GetBuses()
         {
-            var buses = await hasslefreetraveldbcontext.Buses.ToListAsync();
+            var buses = await hasslefreetraveldbcontext.Buses
+                .Select(b => new BusDTO
+                {
+                    Bus_ID = b.Bus_ID, // Ensure Bus_ID matches the expected type (int)
+                    Bus_Number = b.Bus_Number,
+                    Bus_Name = b.Bus_Name,
+                    From_Location = b.From_Location,
+                    To_Location = b.To_Location,
+                    Total_Seats = b.Total_Seats,
+                    Available_Seats = b.Available_Seats
+                })
+                .ToListAsync();
+
             return Ok(buses);
-
-
         }
+
+
+
         /// <summary>
         /// Retrieves a specific bus by ID.
         /// </summary>

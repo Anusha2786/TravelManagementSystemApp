@@ -4,9 +4,11 @@ namespace TravelManagementSystemApp
 {
     public class BusDTO
     {
+        [Key]
+        public int Bus_ID { get; set; }
         [Required]
         [StringLength(20)]
-        public string Bus_Number { get; set; }
+        public int Bus_Number { get; set; }
 
 
 

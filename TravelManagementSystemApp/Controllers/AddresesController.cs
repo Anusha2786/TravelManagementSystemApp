@@ -21,15 +21,28 @@ namespace TravelManagementSystemApp.Controllers
             _context = context;
         }
 
-        // GET: api/Addreses
+        /// <summary>
+        /// Retrieves all addresses.
+        /// </summary>
+        /// <returns>A list of all addresses</returns>
+        /// <response code="200">Returns the list of addresses</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Addreses>>> GetAddreses()
         {
             return await _context.Addreses.ToListAsync();
         }
 
-        // GET: api/Addreses/5
+        /// <summary>
+        /// Retrieves an address by ID.
+        /// </summary>
+        /// <param name="id">The ID of the address to retrieve</param>
+        /// <returns>The address object with the specified ID</returns>
+        /// <response code="200">Returns the address with the specified ID</response>
+        /// <response code="404">If no address with the specified ID exists</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Addreses>> GetAddreses(int id)
         {
             var addreses = await _context.Addreses.FindAsync(id);
@@ -42,9 +55,17 @@ namespace TravelManagementSystemApp.Controllers
             return addreses;
         }
 
-        // PUT: api/Addreses/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates an existing address.
+        /// </summary>
+        /// <param name="id">The ID of the address to update</param>
+        /// <param name="address">The updated address object</param>
+        /// <returns>No content</returns>
+        /// <response code="204">Indicates the address was successfully updated</response>
+        /// <response code="400">If the ID does not match the address ID or the model state is invalid</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PutAddreses(int id, Addreses addreses)
         {
             if (id != addreses.AddressID)
@@ -73,9 +94,29 @@ namespace TravelManagementSystemApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Addreses
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new address.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /api/Addresses
+        ///     {
+        ///         "name": "New Address Name",
+        ///         "code": "NEW",
+        ///         "city": "New City",
+        ///         "state": "New State",
+        ///         "country": "New Country"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="address">The address object to create</param>
+        /// <returns>A newly created address</returns>
+        /// <response code="201">Returns the newly created address</response>
+        /// <response code="400">If the model state is invalid</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Addreses>> PostAddreses(Addreses addreses)
         {
             _context.Addreses.Add(addreses);
@@ -84,8 +125,16 @@ namespace TravelManagementSystemApp.Controllers
             return CreatedAtAction("GetAddreses", new { id = addreses.AddressID }, addreses);
         }
 
-        // DELETE: api/Addreses/5
+        /// <summary>
+        /// Deletes a specific address by ID.
+        /// </summary>
+        /// <param name="id">The ID of the address to delete</param>
+        /// <returns>No content</returns>
+        /// <response code="204">Returns when the address is successfully deleted</response>
+        /// <response code="404">If no address with the specified ID exists</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAddreses(int id)
         {
             var addreses = await _context.Addreses.FindAsync(id);

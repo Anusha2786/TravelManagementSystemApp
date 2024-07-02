@@ -73,6 +73,13 @@ namespace TravelManagementSystemApp.Controllers
             // Other properties as needed
         }
 
+        /// <summary>
+        /// Creates a new booking detail.
+        /// </summary>
+        /// <param name="bookingDetailsDTO">The details of the booking to create</param>
+        /// <returns>A newly created BookingDetailDTO</returns>
+        /// <response code="201">Returns the newly created booking detail</response>
+        /// <response code="400">If the request is invalid</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -1,4 +1,6 @@
-﻿namespace TravelManagementSystemApp.Models.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace TravelManagementSystemApp.Models.Entities
 {
     public class Booking_Details
     {
@@ -9,6 +11,9 @@
             public int Detail_ID { get; set; }
 
         // Navigation property to Booking entity
+        // Navigation property
+        [JsonIgnore] // Add this attribute to prevent serialization of Bookings
+       
         public Bookings Bookings { get; set; }
     }
 

@@ -34,7 +34,8 @@ namespace TravelManagementSystemApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-      
+            modelBuilder.Entity<Buses>()
+                  .HasKey(b => b.Bus_ID); // Ensure primary key is correctly configured
             modelBuilder.Entity<Flights>()
            .HasKey(f => f.Flight_ID);
 
