@@ -8,7 +8,7 @@ namespace TravelManagementSystemApp.Models.Entities
         public int Bus_ID { get; set; }
 
         [Required]
-        [StringLength(20)]
+        
         public int Bus_Number { get; set; }
 
 
