@@ -1,4 +1,6 @@
-﻿namespace TravelManagementSystemApp.Models
+﻿using TravelManagementSystemApp.Models.Entities;
+
+namespace TravelManagementSystemApp.Models
 {
     public class Trainschedules
     {
@@ -6,6 +8,7 @@
         public int TrainId { get; set; }
         public DateTime Departuretime { get; set; }
         public DateTime Arrivaltime { get; set; }
-        public Train Train { get; set; }
+        public Trains Trains { get; set; }
+
     }
 }

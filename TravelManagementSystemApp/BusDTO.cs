@@ -6,7 +6,9 @@ namespace TravelManagementSystemApp
     {
         [Required]
         [StringLength(20)]
-        public int Bus_Number { get; set; }
+        public string Bus_Number { get; set; }
+
+
 
         [Required]
         [StringLength(100)]

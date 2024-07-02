@@ -10,10 +10,10 @@ namespace TravelManagementSystemApp.Controllers
     [ApiController]
     public class TrainshedulesController : ControllerBase
     {
-        private readonly UsersDbContext context;
+        private readonly Hasslefreetraveldbcontext context;
         private readonly ILogger<UsersController> logger;
 
-        public TrainshedulesController(UsersDbContext usersDbContext, ILogger<UsersController> logger)
+        public TrainshedulesController(Hasslefreetraveldbcontext usersDbContext, ILogger<UsersController> logger)
         {
             context = usersDbContext;
             this.logger = logger;

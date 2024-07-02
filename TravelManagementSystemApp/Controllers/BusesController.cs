@@ -52,17 +52,17 @@ namespace TravelManagementSystemApp.Controllers
             return Ok(bus);
         }
 
-       // / POST: api/Buses
-/// <summary>
-/// Creates a new bus entry.
-/// </summary>
-/// <param name="bus">The Bus object containing the details to add</param>
-/// <returns>A newly created Bus object</returns>
-/// <response code="201">Returns the newly created bus</response>
-/// <response code="400">If the request body is null or invalid</response>
-[HttpPost]
-[ProducesResponseType(StatusCodes.Status201Created)]
-[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        // / POST: api/Buses
+        /// <summary>
+        /// Creates a new bus entry.
+        /// </summary>
+        /// <param name="bus">The Bus object containing the details to add</param>
+        /// <returns>A newly created Bus object</returns>
+        /// <response code="201">Returns the newly created bus</response>
+        /// <response code="400">If the request body is null or invalid</response>
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Buses>> PostBus(BusDTO busDto)
         {
             if (!ModelState.IsValid)
@@ -81,12 +81,16 @@ namespace TravelManagementSystemApp.Controllers
                 Available_Seats = busDto.Available_Seats
             };
 
+            // Add new bus entity to the database context
             hasslefreetraveldbcontext.Buses.Add(busEntity);
+
+            // Save changes asynchronously
             await hasslefreetraveldbcontext.SaveChangesAsync();
 
             // Return 201 Created response with the created entity
             return CreatedAtAction(nameof(GetBusById), new { id = busEntity.Bus_ID }, busEntity);
         }
+
 
 
         // PUT: api/Buses/5

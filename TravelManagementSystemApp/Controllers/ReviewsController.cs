@@ -14,9 +14,9 @@ namespace TravelManagementSystemApp.Controllers
     [ApiController]
     public class ReviewsController : ControllerBase
     {
-        private readonly TravelManagementSystemAppContext _context;
+        private readonly Hasslefreetraveldbcontext _context;
 
-        public ReviewsController(TravelManagementSystemAppContext context)
+        public ReviewsController(Hasslefreetraveldbcontext context)
         {
             _context = context;
         }

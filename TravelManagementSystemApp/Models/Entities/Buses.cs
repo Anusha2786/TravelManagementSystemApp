@@ -9,7 +9,8 @@ namespace TravelManagementSystemApp.Models.Entities
 
         [Required]
         [StringLength(20)]
-        public int Bus_Number { get; set; }
+        public string Bus_Number { get; set; }
+
 
         [Required]
         [StringLength(100)]
@@ -17,16 +18,18 @@ namespace TravelManagementSystemApp.Models.Entities
 
         [Required]
         [StringLength(100)]
-        public string From_Location{ get; set; }
+        public string From_Location { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string To_Location{ get; set; }
+        public string To_Location { get; set; }
 
         [Required]
         public int Total_Seats { get; set; }
 
         [Required]
         public int Available_Seats { get; set; }
+
+        public Busschedules Busschedule { get; set; }
     }
 }

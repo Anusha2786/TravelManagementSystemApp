@@ -14,9 +14,9 @@ namespace TravelManagementSystemApp.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly TravelManagementSystemAppContext _context;
+        private readonly Hasslefreetraveldbcontext _context;
 
-        public RoomsController(TravelManagementSystemAppContext context)
+        public RoomsController(Hasslefreetraveldbcontext context)
         {
             _context = context;
         }

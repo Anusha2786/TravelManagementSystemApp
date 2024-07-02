@@ -10,10 +10,10 @@ namespace TravelManagementSystemApp.Controllers
     [ApiController]
     public class BusSchedulesController : ControllerBase
     {
-        private readonly UsersDbContext context;
+        private readonly Hasslefreetraveldbcontext context;
         private readonly ILogger<UsersController> logger;
 
-        public BusSchedulesController(UsersDbContext usersDbContext, ILogger<UsersController> logger)
+        public BusSchedulesController(Hasslefreetraveldbcontext usersDbContext, ILogger<UsersController> logger)
         {
             context = usersDbContext;
             this.logger = logger;

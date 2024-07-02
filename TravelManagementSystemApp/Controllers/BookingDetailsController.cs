@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using TravelManagementSystemApp.Data;
 using TravelManagementSystemApp.Models.Entities;
 
@@ -11,9 +13,11 @@ namespace TravelManagementSystemApp.Controllers
     public class BookingDetailsController : ControllerBase
     {
         private readonly Hasslefreetraveldbcontext hasslefreetraveldbcontext;
+        //private readonly JsonSerializerOptions _jsonOptions;
         public BookingDetailsController(Hasslefreetraveldbcontext hasslefreetraveldbcontext)
         {
             this.hasslefreetraveldbcontext = hasslefreetraveldbcontext;
+         
         }
         /// <summary>
         /// Retrieves a list of all Booking Details.
@@ -57,43 +61,61 @@ namespace TravelManagementSystemApp.Controllers
         /// <summary>
         /// Creates a new Booking Details entry.
         /// </summary>
-        
-        
+
+
         /// <response code="201">Returns the newly created booking details</response>
         /// <response code="400">If the request body is null or invalid</response>
+        public class BookingDetailDTO
+        {
+            public int Booking_Detail_ID { get; set; }
+            public int Booking_ID { get; set; }
+            public string Detail_Type { get; set; }
+            // Other properties as needed
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Booking_Details>> PostBookingDetail(BookingDetailsDTO bookingDetailsDTO)
+        public async Task<ActionResult<BookingDetailDTO>> PostBookingDetail(BookingDetailsDTO bookingDetailsDTO)
         {
-            // Validate input data if necessary
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // Map DTO to entity model
             var bookingDetail = new Booking_Details
             {
-                
+                Booking_ID = bookingDetailsDTO.Booking_ID,
                 Detail_Type = bookingDetailsDTO.Detail_Type,
-                
+                // Map other properties as needed
             };
 
-            // Add booking detail to DbContext and save changes
             hasslefreetraveldbcontext.Booking_Details.Add(bookingDetail);
             await hasslefreetraveldbcontext.SaveChangesAsync();
 
-            // Return created booking detail with 201 Created status
-            return CreatedAtAction(nameof(GetBookingDetailById), new { id = bookingDetail.Booking_Detail_ID }, bookingDetail);
+            var bookingDetailDTO = new BookingDetailDTO
+            {
+                Booking_Detail_ID = bookingDetail.Booking_Detail_ID,
+                Booking_ID = bookingDetail.Booking_ID,
+                Detail_Type = bookingDetail.Detail_Type,
+                // Map other properties as needed
+            };
+
+            return CreatedAtAction(nameof(GetBookingDetailById), new { id = bookingDetailDTO.Booking_Detail_ID }, bookingDetailDTO);
         }
+
+
+
+
+
+
         /// PUT: api/bookingdetails/{id}
         /// <summary>
         /// Updates the Booking Details identified by ID.
         /// </summary>
         /// <param name="id">The ID of the Booking Details to update</param>
         /// <param name="bookingDetailsDTO">The updated BookingDetailsDTO object</param>
-       
+
         /// <response code="200">Returns the updated booking details</response>
         /// <response code="400">If the request body or ID is invalid</response>
         /// <response code="404">If no booking details with the specified ID exist</response>

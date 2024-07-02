@@ -28,6 +28,7 @@ namespace TravelManagementSystemApp.Models.Entities
 
         [Required]
         public int Available_Seats { get; set; }
+        public Trainschedules Trainschedules { get; set; }
 
     }
 }

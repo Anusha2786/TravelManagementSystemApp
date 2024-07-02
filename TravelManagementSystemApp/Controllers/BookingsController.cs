@@ -107,9 +107,16 @@ namespace TravelManagementSystemApp.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Check if the provided user exists
+            var user = await hasslefreetraveldbcontext.users.FindAsync(createBookingDto.User.userid);
+            if (user == null)
+            {
+                return BadRequest("User with the provided userid does not exist.");
+            }
+
             var booking = new Bookings
             {
-              
+                userid = createBookingDto.User.userid, // Ensure userid corresponds to an existing user
                 Booking_Date = createBookingDto.Booking_Date,
                 Booking_Type = createBookingDto.Booking_Type,
                 Booking_Status = createBookingDto.Booking_Status,
@@ -121,15 +128,19 @@ namespace TravelManagementSystemApp.Controllers
 
             var bookingDto = new BookingsDTO
             {
-               
                 Booking_Date = booking.Booking_Date,
                 Booking_Type = booking.Booking_Type,
                 Booking_Status = booking.Booking_Status,
-                // Map other properties if needed
+                User = new UserDTO
+                {
+                    userid = booking.userid,
+                    // Map other user properties if needed
+                }
             };
 
             return CreatedAtAction(nameof(GetBookingById), new { id = booking.Booking_ID }, bookingDto);
         }
+
         // PUT: api/bookings/{id}
         /// <summary>
         /// Updates an existing Booking record identified by ID.
