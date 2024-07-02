@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using TravelManagementSystemApp.Data;
 using TravelManagementSystemApp.Models.Entities;
 
@@ -11,9 +13,12 @@ namespace TravelManagementSystemApp.Controllers
     public class PaymentsController : ControllerBase
     {
         private readonly Hasslefreetraveldbcontext hasslefreetraveldbcontext;
-        public PaymentsController(Hasslefreetraveldbcontext hasslefreetraveldbcontext)
+        private readonly ILogger<PaymentsController> _logger;
+
+        public PaymentsController(Hasslefreetraveldbcontext hasslefreetraveldbcontext, ILogger<PaymentsController> _logger)
         {
             this.hasslefreetraveldbcontext = hasslefreetraveldbcontext;
+            this._logger = _logger;
         }
         // GET: api/payments
         /// <summary>
@@ -82,39 +87,46 @@ namespace TravelManagementSystemApp.Controllers
         /// <returns>A newly created Payment object</returns>
         /// <response code="201">Returns the newly created payment</response>
         /// <response code="400">If the request body is null or invalid</response>
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Payments>> PostPayment(Payments createPaymentDto)
+        public async Task<ActionResult<Payments>> PostPayment(PaymentDTO createPaymentDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var payment = new Payments
+            try
             {
-                
-                Amount = createPaymentDto.Amount,
-                Payment_Date = createPaymentDto.Payment_Date,
-                Payment_Method = createPaymentDto.Payment_Method
-                // Add more properties as needed
-            };
+                // Create a new Payments entity
+                var payment = new Payments
+                {
+                    Booking_ID = createPaymentDto.Booking_ID,
+                    Amount = createPaymentDto.Amount,
+                    Payment_Date = createPaymentDto.Payment_Date,
+                    Payment_Method = createPaymentDto.Payment_Method
+                    // Add more properties as needed
+                };
 
-            hasslefreetraveldbcontext.Payments.Add(payment);
-            await hasslefreetraveldbcontext.SaveChangesAsync();
+                hasslefreetraveldbcontext.Payments.Add(payment);
+                await hasslefreetraveldbcontext.SaveChangesAsync();
 
-            var paymentDto = new Payments
+                return CreatedAtAction(nameof(GetPaymentById), new { id = payment.Payment_ID }, payment);
+            }
+            catch (Exception ex)
             {
-               
-                Amount = payment.Amount,
-                Payment_Date = payment.Payment_Date,
-                Payment_Method = payment.Payment_Method
-                // Map other properties if needed
-            };
-
-            return CreatedAtAction(nameof(GetPaymentById), new { id = paymentDto.Payment_ID }, paymentDto);
+                _logger.LogError(ex, "Error occurred while saving payment");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while saving the payment");
+            }
         }
+
+        
+
+        // Add more controller methods as needed
+
+
 
         // PUT: api/payments/{id}
         /// <summary>
