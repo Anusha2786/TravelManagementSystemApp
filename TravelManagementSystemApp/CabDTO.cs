@@ -6,15 +6,15 @@ namespace TravelManagementSystemApp
     public class CabDTO
     {
         [Required]
-        public string Cab_Model { get; set; }
+        public string? Cab_Model { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string Pickup_Location { get; set; }
+        public string? Pickup_Location { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string Dropoff_Location { get; set; }
+        public string? Dropoff_Location { get; set; }
 
         [Required]
         public DateTime Pickup_Time { get; set; }
@@ -26,7 +26,7 @@ namespace TravelManagementSystemApp
         public decimal FareAmount { get; set; }
         public double Distance { get; set; }
         [StringLength(50)]
-        public string CabType { get; set; }
+        public string? CabType { get; set; }
     }
 }
 
